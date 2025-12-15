@@ -8,7 +8,7 @@ $errors = AuthController::validateRegister($_POST);
 
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header('Location: ../public/register.php');
+    header(header: 'Location: ../public/register.php');
     exit;
 }
 
@@ -16,11 +16,11 @@ $userExists = User::getUserByEmail($_POST['email'], $pdo);
 
 if ($userExists) {
     $_SESSION['errors'] = ["User with this email already exists."];
-    header('Location: ../public/register.php');
+    header(header: 'Location: ../public/register.php');
     exit;
 }
 
 User::createUser($_POST['username'], $_POST['email'], $_POST['password'], $pdo);
 
-header('Location: ../public/login.php');
+header(header: 'Location: ../public/login.php');
 exit;

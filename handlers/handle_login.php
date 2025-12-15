@@ -8,7 +8,7 @@ $errors = AuthController::validateLogin($_POST);
 
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header('Location: ../public/login.php');
+    header(header: 'Location: ../public/login.php');
     exit;
 }
 
@@ -16,11 +16,16 @@ $user = User::getUserByEmail($_POST['email'], $pdo);
 
 if (!$user || !password_verify($_POST['password'], $user['password'])) {
     $_SESSION['errors'] = ["Invalid email or password."];
-    header('Location: ../public/login.php');
+    header(header: 'Location: ../public/login.php');
     exit;
 }
 
 $_SESSION['user_id'] = $user['id'];
 
-header('Location: ../public/profile.php');
+if(User::isAdmin(user: $user)) {
+    header(header: 'Location: ../admin/dashboard.php');
+    exit;
+}else {
+    header(header: 'Location: ../public/profile.php');
+}
 exit;

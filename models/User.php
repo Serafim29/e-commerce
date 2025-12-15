@@ -23,4 +23,7 @@ class User {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public static function isAdmin($user): bool {
+        return isset($user['role']) && $user['role'] === 'admin';
+    }
 }
